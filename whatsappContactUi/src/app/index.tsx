@@ -49,7 +49,6 @@ export default function Index() {
 
   const filterContacts = useMemo(()=>{
     if(!search.trim()) return contacts;
-
     return contacts.filter((item)=>(
       item.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
     ))
