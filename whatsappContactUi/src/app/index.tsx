@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import {
   Text,
   View,
@@ -47,6 +47,14 @@ export default function Index() {
     }
   };
 
+  const filterContacts = useMemo(()=>{
+    if(!search.trim()) return contacts;
+
+    return contacts.filter((item)=>(
+      item.name.toLocaleLowerCase().includes(search.toLocaleLowerCase())
+    ))
+  },[contacts, search])
+
   const renderItem = ({ item }: { item: Contacts }) => (
     <TouchableOpacity style={styles.contacts}>
       <Image source={{ uri: item.avatar }} style={styles.avatar} />
@@ -65,7 +73,7 @@ export default function Index() {
       </View>
       
       <FlatList
-        data={contacts}
+        data={filterContacts}
         keyExtractor={(item) => item.id}
         renderItem={renderItem}
         initialNumToRender={15}
